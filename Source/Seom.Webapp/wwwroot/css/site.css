@@ -1,0 +1,26 @@
+html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+}
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.app {
+    max-width: 70em;
+    margin: 1em auto;
+    display: flex;
+    flex-direction: column;
+}
+nav {
+    flex:0 0 2em;
+    display: flex;
+    gap:1em;
+}
+
+main {
+    flex-grow: 1;
+}
