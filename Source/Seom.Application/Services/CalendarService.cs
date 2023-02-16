@@ -73,6 +73,21 @@ public class CalendarService
         var last = CalcDayNumber(start.AddMonths(1).AddDays(-1));
         return _calendarDays[first..(last + 1)];
     }
+
+    public CalendarDay[] GetDaysOfMonthFullWeeks(int year, int month)
+    {
+        // Den MO vor dem Monatsersten ermitteln, um volle Wochen zurückzugeben.
+        var start = new DateTime(year, month, 1);
+        start = start.AddDays(-(((int)start.DayOfWeek - 1 + 7) % 7));
+
+        // Den SO nach dem Monatsletzten ermitteln, um volle Wochen zurückzugeben.
+        var end = new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
+        end = end.AddDays((7 - (int)end.DayOfWeek) % 7);
+
+        var first = CalcDayNumber(start);
+        var last = CalcDayNumber(end);
+        return _calendarDays[first..(last + 1)];
+    }
     /// <summary>
     /// Bestimmt die Anzahl der Arbeitstage zwischen 2 Datumswerten.
     /// </summary>

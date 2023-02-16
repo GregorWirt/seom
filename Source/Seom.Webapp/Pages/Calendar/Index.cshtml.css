@@ -1,0 +1,86 @@
+﻿.monthSelector {
+    display: flex;
+    gap: 1em;
+    align-items: baseline;
+}
+
+.header h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.headerArrow {
+    cursor: pointer;
+    font-size: 200%;
+}
+
+.headerMonth {
+    flex: 8em 0 0;
+}
+
+
+.holidayName {
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 80%;
+}
+
+.calendar {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, 0.5fr));
+    grid-template-rows: auto repeat(6, minmax(5em, auto));
+}
+
+.headerCell {
+    overflow: hidden;
+    font-weight: bolder;
+    border: 1px solid hsl(0, 0%, 85%);
+}
+
+.dayCell {
+    border: 1px solid hsl(0, 0%, 85%);
+    padding: 0.2em;
+    display: flex;
+    flex-direction: column;
+}
+
+    .dayCell:hover {
+        border: 2px solid hsl(0, 0%, 10%);
+    }
+
+.disabled {
+    color: hsl(0, 0%, 70%);
+}
+
+.weekend {
+    background-color: hsl(0, 0%, 97%);
+}
+
+.holiday {
+    color:red;
+}
+
+.today {
+    border: 2px solid hsl(0, 0%, 10%);
+}
+
+.dayHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.dayNumber {
+    font-weight: bolder;
+    flex-grow: 1;
+}
+
+.milestones {
+    flex-grow: 1;
+}
+
+.milestones .finished {
+    color:darkgreen;
+}

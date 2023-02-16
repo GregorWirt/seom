@@ -1,0 +1,51 @@
+﻿@page "{year:int}/{month:int}"
+@model Seom.Webapp.Pages.Calendar.IndexModel
+@{
+}
+<h1>Meilensteine</h1>
+<div class="monthSelector">
+    <div class="headerArrow"><a asp-route-year="@Model.PrevYear" asp-route-month="@Model.PrevMonth"><i class="fa-solid fa-circle-arrow-left"></i></a></div>
+    <h3 class="headerMonth">@Model.MonthName @Model.Year</h3>
+    <div class="headerArrow"><a asp-route-year="@Model.NextYear" asp-route-month="@Model.NextMonth"><i class="fa-solid fa-circle-arrow-right"></i></a></div>
+</div>
+<div class="calendar">
+    <div class="headerCell">Montag</div>
+    <div class="headerCell">Dienstag</div>
+    <div class="headerCell">Mittwoch</div>
+    <div class="headerCell">Donnerstag</div>
+    <div class="headerCell">Freitag</div>
+    <div class="headerCell">Samstag</div>
+    <div class="headerCell">Sonntag</div>
+    @foreach (var d in Model.CalendarDayDtos)
+    {
+        var classlist = string.Join(" ", new string[]
+        {
+    "dayCell",
+    !(d.DateTime.Month == Model.Month && d.DateTime.Year == Model.Year) ? "disabled" : string.Empty,
+    !d.IsWorkingDayMoFr ? "weekend" : string.Empty,
+    d.IsPublicHoliday ? "holiday" : string.Empty,
+    d.DateTime == DateTime.UtcNow.Date ? "today" : string.Empty
+        });
+        <div class="@classlist">
+            <div class="dayHeader">
+                <div class="dayNumber">
+                    @($"{d.DateTime.Day}. {(d.DateTime.Month != Model.Month ? d.DateTime.Month.ToString("00") : string.Empty)}")
+                </div>
+                <div class="holidayName">@d.PublicHolidayName</div>
+            </div>
+            <div class="milestones">
+                @foreach (var m in d.MilestoneDtos)
+                {
+                    var milestoneClasslist = m.IsFinished ? "finished" : "";
+                    <div class="@milestoneClasslist">
+                        @if (m.IsFinished)
+                        {
+                            <i class="fa-regular fa-circle-check"></i>
+                        }
+                        @m.Name
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

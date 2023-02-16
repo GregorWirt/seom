@@ -62,7 +62,8 @@
             </div>
             <div class="leftnavGroup">
                 <div class="leftnavGroupHeader">
-                    <div><a asp-page="Calendar">
+                    <div>
+                        <a asp-page="Calendar/Index" asp-route-year="@DateTime.UtcNow.Year" asp-route-month="@DateTime.UtcNow.Month">
                             <i class="fa-solid fa-calendar-check"></i>
                             Kalender</a></div>
                 </div>

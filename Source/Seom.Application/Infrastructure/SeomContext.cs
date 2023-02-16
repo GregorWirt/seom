@@ -90,8 +90,8 @@ namespace Seom.Application.Infrastructure
             var milestones = new Faker<Milestone>("de").CustomInstantiator(f =>
             {
                 var project = f.Random.ListItem(projects);
-                var datePlanned = f.Date.Between(project.Start, project.Finished ?? baseDate.AddDays(90));
-                var dateFinished = datePlanned.AddDays(f.Random.Int(-14, 14)).OrNull(f, 0.5f);
+                var datePlanned = f.Date.Between(project.Start, project.Finished ?? baseDate.AddDays(90)).Date;
+                DateTime? dateFinished = datePlanned.AddDays(f.Random.Int(-14, 14));
                 if (dateFinished > baseDate) { dateFinished = null; }
                 return new Milestone(
                     project: project, name: f.Lorem.Sentence(5),
