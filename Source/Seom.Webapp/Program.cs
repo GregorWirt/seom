@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // BUILDER CONFIGURATION
 // *************************************************************************************************
 
-// Database********** ******************************************************************************
+// Database*****************************************************************************************
 // Read the sql server connection string from appsettings.json located at
 // ConnectionStrings -> Default.
 builder.Services.AddDbContext<SeomContext>(opt =>
