@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,21 +12,66 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">    
-    <link href="~/css/site.css" rel="stylesheet">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+        integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Isolated CSS from ASP Razor Pages -->
+    <link rel="stylesheet" href="~/Seom.Webapp.styles.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/js/site.js"></script>
     @RenderSection("head", required: false)
 </head>
+
 <body>
-    <div class="app">
-        <header>
-            <nav>
-                <div><a asp-page="Index">Index</a></div>
-            </nav>
-        </header>
-        <main>
+    <header>
+        <div class="navContent">
+            <div class="navImage">
+                <img src="~/logo_background.png" style="height:100px">
+            </div>
+            <div class="navHeadline">
+                Taurus Pioneering Order Management
+            </div>
+        </div>
+        <div class="headerNavButtons">
+            <div>Login</div>
+        </div>
+    </header>
+    <main>
+        <div class="leftnav">
+            <div class="leftnavGroup">
+                <div class="leftnavGroupHeader">
+                    <div><a asp-page="Dashboard">
+                            <i class="fa-solid fa-gauge"></i>
+                            Dashboard</a></div>
+                </div>
+            </div>
+            <div class="leftnavGroup">
+                <div class="leftnavGroupHeader">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    Projekte
+                </div>
+                <div class="leftnavGroupContent">
+                    <div><a asp-page="Project/Manage">Projekte verwalten</a></div>
+                    <div><a asp-page="Milestone/Index">Meilensteine verwalten</a></div>
+                </div>
+            </div>
+            <div class="leftnavGroup">
+                <div class="leftnavGroupHeader">
+                    <div><a asp-page="Calendar">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            Kalender</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="mainContent">
             @RenderBody()
-        </main>
-    </div>
+        </div>
+    </main>
 </body>
+
 </html>

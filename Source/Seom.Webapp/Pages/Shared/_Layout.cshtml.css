@@ -1,0 +1,8 @@
+.navHeadline {
+    font-size:200%;
+    color: hsl(165, 35%, 35%);
+}
+
+.navImage {
+    flex: 0 0 10rem;
+}
