@@ -22,5 +22,6 @@ namespace Seom.Application.Model
         public DateTime DatePlanned { get; set; }
         public DateTime? DateFinished { get; set; }
         public List<Task> Tasks { get; } = new();
+        public bool Delayed => DatePlanned < DateTime.UtcNow && DateFinished is null;
     }
 }

@@ -16,7 +16,7 @@ namespace Seom.Webapp.Pages.Calendar
             List<MilestoneDto> MilestoneDtos);
         public record MilestoneDto(
             string Name, string ProjectName, DateTime? DateFinished,
-            DateTime DatePlanned, bool IsFinished, DateTime FinishedOrPlanned);
+            DateTime DatePlanned, bool IsFinished, bool Delayed, DateTime FinishedOrPlanned);
 
         private readonly CalendarService _calendar;
         private readonly SeomContext _db;
@@ -48,6 +48,7 @@ namespace Seom.Webapp.Pages.Calendar
                     m.DateFinished,
                     m.DatePlanned,
                     m.DateFinished != null,
+                    m.Delayed,
                     m.DateFinished ?? m.DatePlanned
                 ))
                 .ToList();

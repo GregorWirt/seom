@@ -36,11 +36,16 @@
             <div class="milestones">
                 @foreach (var m in d.MilestoneDtos)
                 {
-                    var milestoneClasslist = m.IsFinished ? "finished" : "";
+                    var milestoneClasslist = m.IsFinished ? "finished" : string.Empty;
+                    milestoneClasslist += m.Delayed ? " delayed" : string.Empty;
                     <div class="@milestoneClasslist">
                         @if (m.IsFinished)
                         {
                             <i class="fa-regular fa-circle-check"></i>
+                        }
+                        @if (m.Delayed)
+                        {
+                            <i class="fa-solid fa-circle-exclamation"></i>
                         }
                         @m.Name
                     </div>

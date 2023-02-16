@@ -58,7 +58,7 @@
 }
 
 .holiday {
-    color:red;
+    color: red;
 }
 
 .today {
@@ -81,6 +81,10 @@
     flex-grow: 1;
 }
 
-.milestones .finished {
-    color:darkgreen;
-}
+    .milestones .finished {
+        color: darkgreen;
+    }
+
+    .milestones .delayed {
+        color: red;
+    }

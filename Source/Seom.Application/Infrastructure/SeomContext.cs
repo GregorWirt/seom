@@ -93,12 +93,13 @@ namespace Seom.Application.Infrastructure
                 var datePlanned = f.Date.Between(project.Start, project.Finished ?? baseDate.AddDays(90)).Date;
                 DateTime? dateFinished = datePlanned.AddDays(f.Random.Int(-14, 14));
                 if (dateFinished > baseDate) { dateFinished = null; }
+                if (dateFinished > baseDate.AddDays(-14)) { dateFinished = f.Random.Bool(0.5f) ? null : dateFinished; }
                 return new Milestone(
                     project: project, name: f.Lorem.Sentence(5),
                     datePlanned: datePlanned, dateFinished: dateFinished)
                 { Guid = f.Random.Guid() };
             })
-            .Generate(50)
+            .Generate(100)
             .ToList();
             Milestones.AddRange(milestones);
             SaveChanges();
@@ -112,7 +113,7 @@ namespace Seom.Application.Infrastructure
                     Fullfilled = f.Random.Bool(0.4f)
                 };
             })
-            .Generate(200)
+            .Generate(100)
             .ToList();
             Tasks.AddRange(tasks);
             SaveChanges();

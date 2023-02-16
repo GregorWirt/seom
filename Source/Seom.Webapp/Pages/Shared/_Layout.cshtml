@@ -45,7 +45,7 @@
         <div class="leftnav">
             <div class="leftnavGroup">
                 <div class="leftnavGroupHeader">
-                    <div><a asp-page="Dashboard">
+                    <div><a asp-page="/Index">
                             <i class="fa-solid fa-gauge"></i>
                             Dashboard</a></div>
                 </div>
@@ -56,14 +56,14 @@
                     Projekte
                 </div>
                 <div class="leftnavGroupContent">
-                    <div><a asp-page="Project/Manage">Projekte verwalten</a></div>
-                    <div><a asp-page="Milestone/Index">Meilensteine verwalten</a></div>
+                    <div><a asp-page="/Projects/Index">Projekte verwalten</a></div>
+                    <div><a asp-page="/Milestones/Index">Meilensteine verwalten</a></div>
                 </div>
             </div>
             <div class="leftnavGroup">
                 <div class="leftnavGroupHeader">
                     <div>
-                        <a asp-page="Calendar/Index" asp-route-year="@DateTime.UtcNow.Year" asp-route-month="@DateTime.UtcNow.Month">
+                        <a asp-page="/Calendar/Index" asp-route-year="@DateTime.UtcNow.Year" asp-route-month="@DateTime.UtcNow.Month">
                             <i class="fa-solid fa-calendar-check"></i>
                             Kalender</a></div>
                 </div>
