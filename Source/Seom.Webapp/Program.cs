@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Seom.Application.Infrastructure;
+using Seom.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // *************************************************************************************************
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<SeomContext>(opt =>
         o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
 
 // Add services to the container.
+builder.Services.AddSingleton(provider => new CalendarService(2000,2100));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
