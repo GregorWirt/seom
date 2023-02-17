@@ -15,7 +15,7 @@ namespace Seom.Webapp.Pages.Calendar
             DateTime DateTime, bool IsWorkingDayMoFr, bool IsPublicHoliday, string? PublicHolidayName,
             List<MilestoneDto> MilestoneDtos);
         public record MilestoneDto(
-            string Name, string ProjectName, DateTime? DateFinished,
+            string Name, Guid ProjectGuid, string ProjectName, DateTime? DateFinished,
             DateTime DatePlanned, bool IsFinished, bool Delayed, DateTime FinishedOrPlanned);
 
         private readonly CalendarService _calendar;
@@ -44,6 +44,7 @@ namespace Seom.Webapp.Pages.Calendar
                 .Where(m => (m.DateFinished ?? m.DatePlanned).Year == Year && (m.DateFinished ?? m.DatePlanned).Month == Month)
                 .Select(m=> new MilestoneDto(
                     m.Name,
+                    m.Project.Guid,
                     m.Project.Name,
                     m.DateFinished,
                     m.DatePlanned,

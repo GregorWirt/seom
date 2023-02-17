@@ -53,10 +53,6 @@ namespace Seom.Webapp.Pages.Timesheet
         public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
         {
             Projects = new SelectList(_db.Projects.OrderBy(p => p.Name), nameof(Project.Guid), nameof(Project.Name), "");
-            //Projects = _db.Projects
-            //    .OrderBy(p => p.Name)
-            //    .Select(p => new SelectListItem(p.Name, p.Guid.ToString()))
-            //    .ToList();
             WorkItems = _db.WorkItems.Where(w => w.Project.Guid == ProjectGuid)
                 .OrderBy(p => p.From)
                 .ToList();

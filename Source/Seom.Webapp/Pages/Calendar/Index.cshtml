@@ -47,7 +47,7 @@
                         {
                             <i class="fa-solid fa-circle-exclamation"></i>
                         }
-                        @m.Name
+                        <a style="color:inherit" asp-page="/Milestones/Index" asp-route-projectguid="@m.ProjectGuid">@m.Name</a>
                     </div>
                 }
             </div>

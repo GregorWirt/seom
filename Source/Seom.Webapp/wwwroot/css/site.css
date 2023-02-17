@@ -88,3 +88,12 @@ main {
     padding: 0rem 1rem;
     overflow-y: auto;
 }
+
+@media (max-width:768px) {
+    main {
+        flex-direction: column;
+    }
+    header {
+        display:none;
+    }
+}

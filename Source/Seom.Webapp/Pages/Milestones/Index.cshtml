@@ -1,26 +1,73 @@
-﻿@page
+﻿@page "{ProjectGuid:Guid?}"
 @model Seom.Webapp.Pages.Milestones.IndexModel
-@{
+
+<h1>Tasks verwalten</h1>
+<div class="projectSelectForm">
+    <div class="projectSelectFormLabel">Wähle ein Projekt:</div>
+    <div class="projectSelectFormSelector">
+        <select id="projectSelector" onchange="submitProject()" class="form-select" asp-for="ProjectGuid" asp-items="@Model.Projects">
+            <option value=""></option>
+        </select>
+    </div>
+</div>
+@if (Model.ProjectGuid != default)
+{
+    @if (Model.Milestones.Any())
+    {
+        <p>
+            Hier kannst du die Meilensteine der Tasks bearbeiten.
+            Setze die Checkbox, wenn der Task beendet ist.
+            Es werden nur Meilensteine angezeigt, die noch nicht abgeschlossen sind.
+        </p>
+        <form id="tasksForm" method="post">
+            <div class="milestones">
+                @foreach (var m in Model.Milestones.Values.OrderBy(m => m.DatePlanned))
+                {
+                    <div class="milestoneCard">
+                        <div class="milestoneCardTitle">@m.Name (deadline: @m.DatePlanned.ToString("dd.MM.yyyy"))</div>
+                        <div class="milestoneCardContent">
+                            @if (m.Tasks.Any())
+                            {
+                                @foreach (var t in m.Tasks)
+                                {
+                                    <div class="milestoneCardContentTask">
+                                        <div class="milestoneCardContentTaskCheckbox">
+                                            <input asp-for="TaskFullfilled[t.Guid]" onchange="submitForm()">
+                                        </div>
+                                        <div class="milestoneCardContentTaskText">
+                                            <label asp-for="TaskFullfilled[t.Guid]">@t.Text</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <text>Keine Tasks definiert.</text>
+                            }
+
+                        </div>
+                        <div class="milestoneCardFooter">
+                            <input class="form-control" placeholder="Neuen Task anlegen" asp-for="NewTasks[m.Guid]" />
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </form>
+    }
+    else
+    {
+        <p>Keine offenen Meilensteine vorhanden.</p>
+    }
+
 }
 
-<form method="post">
-    <select class="form-select">
-        <option>Projekt 1</option>
-        <option>Projekt 2</option>
-        <option>Projekt 3</option>
-    </select>
-</form>
-
-<div class="milestoneCard">
-    <div class="milestoneCardTitle">Meilenstein Name</div>
-    <div class="milestoneCardContent">Task 1, Task 2, ....</div>
-</div>
-<div class="milestoneCard">
-    <div class="milestoneCardTitle">Meilenstein Name</div>
-    <div class="milestoneCardContent">Task 1, Task 2, ....</div>
-</div>
-<div class="milestoneCard">
-    <div class="milestoneCardTitle">Meilenstein Name</div>
-    <div class="milestoneCardContent">Task 1, Task 2, ....</div>
-</div>
-
+<script>
+    function submitProject() {
+        const projectGuid = document.getElementById("projectSelector").value;
+        window.location.href = window.location.href.split("/")[0] + `/milestones/${projectGuid}`;
+    }
+    function submitForm() {
+        document.getElementById("tasksForm").submit();
+    }
+</script>
