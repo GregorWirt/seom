@@ -1,0 +1,59 @@
+﻿@page "{ProjectGuid:Guid?}"
+@model Seom.Webapp.Pages.Timesheet.IndexModel
+
+<h1>Zeiterfassung</h1>
+<div class="projectSelectForm">
+    <div class="projectSelectFormLabel">Wähle ein Projekt:</div>
+    <div class="projectSelectFormSelector">
+        <select id="projectSelector" onchange="submitProject()" class="form-select" asp-for="ProjectGuid" asp-items="@Model.Projects">
+            <option value=""></option>
+        </select>
+    </div>
+</div>
+@if (Model.ProjectGuid != default)
+{
+    <form method="post" asp-page-handler="Workitem">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th style="width:50%; min-width:20em">Tätigikeit</th>
+                    <th style="width:10%">Von</th>
+                    <th style="width:10%">Bis</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var w in Model.WorkItems)
+                {
+                    <tr>
+                        <td>@w.Name</td>
+                        <td>@w.From</td>
+                        <td>@w.To</td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <input class="form-control" asp-for="NewWorkItem!.Name" />
+                        <span asp-validation-for="NewWorkItem!.Name" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input class="form-control" asp-for="NewWorkItem!.From" />
+                        <span asp-validation-for="NewWorkItem!.From" class="text-danger"></span>
+                    </td>
+                    <td class="submitCell">
+                        <div>
+                            <input class="form-control" asp-for="NewWorkItem!.To" />
+                            <span asp-validation-for="NewWorkItem!.To" class="text-danger"></span>
+                        </div>
+                        <button class="btn btn-small btn-primary" type="submit">Save</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+}
+<script>
+    function submitProject() {
+        const projectGuid = document.getElementById("projectSelector").value;
+        window.location.href = window.location.href.split("/")[0] + `/timesheet/${projectGuid}`;
+    }
+</script>

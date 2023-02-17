@@ -1,0 +1,15 @@
+﻿.submitCell {
+    display: flex;
+    align-items:start;
+    gap:0.5rem;
+}
+
+.projectSelectForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.projectSelectFormSelector {
+    flex: 0 1 10em;
+}
