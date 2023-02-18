@@ -82,7 +82,7 @@ if [ $CREATE_APP = y ]; then
     # !!! Do not generate a new secret if you only re-reploy a new containerimage. Any password in the database would become invalid. !!!
     SECRET=$(dd if=/dev/random bs=128 count=1 2> /dev/null | base64)
     # ASP.NET Core reads setting ConnectionStrings:Default from environment variable ConnectionStrings__SqlServer
-    az webapp config appsettings set --name $DNS_NAME --resource-group $AZ_GROUP --settings "SECRET"="$SECRET" > /dev/null
+    az webapp config appsettings set --name $DNS_NAME --resource-group $AZ_GROUP --settings "SECRET"="$SECRET" "ASPNETCORE_ENVIRONMENT"="Development" > /dev/null
 
     az webapp stop  --name $DNS_NAME --resource-group $AZ_GROUP  > /dev/null
     az webapp start --name $DNS_NAME --resource-group $AZ_GROUP  > /dev/null

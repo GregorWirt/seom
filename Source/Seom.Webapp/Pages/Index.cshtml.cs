@@ -57,6 +57,8 @@ public class IndexModel : PageModel
     {
         var epoch = new DateTime(1970, 1, 1);
         var workItems = (projectGuid != default ? _db.WorkItems.Where(w => w.Project.Guid == projectGuid) : _db.WorkItems).ToList();
+        if (!workItems.Any()) { return new JsonResult(Array.Empty<decimal[]>()); }
+
         var workloads = new List<WorkloadDto>();
         var end = workItems.Max(w => w.To);
         for (var date = WorkItem.CalcStartOfWeek(workItems.Min(w => w.From)); date <= end; date = date.AddDays(7))
