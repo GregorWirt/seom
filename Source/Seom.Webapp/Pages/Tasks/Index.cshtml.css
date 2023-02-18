@@ -1,0 +1,48 @@
+.projectSelectForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.projectSelectFormSelector {
+    flex: 0 1 20em;
+}
+
+.milestones {
+    display: grid;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+}
+
+.milestoneCard {
+    border:2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.milestoneCardTitle {
+    background-color: hsl(165, 35%, 95%);
+    font-weight: bolder;
+    padding: 0.5rem 0.5rem;
+}
+
+.milestoneCardContentTask {
+    display: flex;
+    column-gap: 0.25rem;
+}
+
+.milestoneCardContent {
+    flex-grow: 1;
+    padding: 0rem 0.5rem;
+}
+
+.milestoneCardFooter {
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    column-gap: 0.5rem;
+}
+

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Seom.Application.Dtos
 {
     public record WorkItemDto(
+        Guid Guid,
         [StringLength(255, MinimumLength = 2)] string Name,
         DateTime From,
         DateTime To) : IValidatableObject

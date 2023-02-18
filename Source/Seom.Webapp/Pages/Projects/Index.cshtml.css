@@ -1,14 +1,3 @@
-.projectSelectForm {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.projectSelectFormSelector {
-    flex: 0 1 20em;
-}
-
 .validationErrors {
     background-color: hsl(52, 100%, 90%);
     padding: 0.5rem;
@@ -22,7 +11,7 @@
 
 .datatable {
     margin-bottom: 0.5rem;
-    width:100%;
+    width: 100%;
 }
 
     .datatable td {
@@ -30,4 +19,3 @@
         margin: 0;
         vertical-align: top;
     }
-

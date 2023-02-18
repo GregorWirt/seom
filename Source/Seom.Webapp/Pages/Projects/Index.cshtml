@@ -1,7 +1,104 @@
 ﻿@page
 @model Seom.Webapp.Pages.Projects.IndexModel
-@{
+@section head {
+    <style>
+        .datatable input {
+            border: 1px solid hsl(165, 35%, 85%);
+            padding: 0.25rem;
+            width: 100%;
+        }
+    </style>
 }
 <h1>Projekte verwalten</h1>
 
-Tabelle mit Projekten
+<div class="validationErrors text-danger" asp-validation-summary="ModelOnly"></div>
+
+
+<h5>Neues Projekt</h5>
+<form method="post" asp-page-handler="NewProject">
+    <table class="datatable">
+        <thead>
+            <tr>
+                <th style="width: 25%">Name</th>
+                <th style="width: 25%">Kunde</th>
+                <th style="width: 25%">Repo</th>
+                <th style="width: 12.5%">Start</th>
+                <th style="width: 12.5%">Ende</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input asp-for="NewProjectDto!.Name">
+                    <span class="text-danger" asp-validation-for="NewProjectDto!.Name"></span>
+                </td>
+                <td>
+                    <input asp-for="NewProjectDto!.Customer">
+                    <span class="text-danger" asp-validation-for="NewProjectDto!.Customer"></span>
+                </td>
+                <td>
+                    <input asp-for="NewProjectDto!.Repo">
+                    <span class="text-danger" asp-validation-for="NewProjectDto!.Repo"></span>
+                </td>
+                <td>
+                    <input type="date" asp-for="NewProjectDto!.Start">
+                    <span class="text-danger" asp-validation-for="NewProjectDto!.Start"></span>
+                </td>
+                <td>
+                    <input type="date" asp-for="NewProjectDto!.Finished">
+                    <span class="text-danger" asp-validation-for="NewProjectDto!.Finished"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+</form>
+
+<h5 class="mt-3">Projekte editieren</h5>
+<form method="post" asp-page-handler="EditProjects">
+    <table class="datatable">
+        <thead>
+            <tr>
+                <th style="width: 25%">Name</th>
+                <th style="width: 25%">Kunde</th>
+                <th style="width: 25%">Repo</th>
+                <th style="width: 12.5%">Start</th>
+                <th style="width: 12.5%">Ende</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Projects.Values.OrderBy(p => p.Start))
+            {
+                <tr>
+                    <td>
+                        <input asp-for="ProjectDtos![p.Guid].Guid" type="hidden">
+                        <input asp-for="ProjectDtos![p.Guid].Name">
+                        <span class="text-danger" asp-validation-for="ProjectDtos![p.Guid].Name"></span>
+                    </td>
+                    <td>
+                        <input asp-for="ProjectDtos![p.Guid].Customer">
+                        <span class="text-danger" asp-validation-for="ProjectDtos![p.Guid].Customer"></span>
+
+                    </td>
+                    <td>
+                        <input asp-for="ProjectDtos![p.Guid].Repo">
+                        <span class="text-danger" asp-validation-for="ProjectDtos![p.Guid].Repo"></span>
+
+                    </td>
+                    <td>
+                        <input type="date" asp-for="ProjectDtos![p.Guid].Start">
+                        <span class="text-danger" asp-validation-for="ProjectDtos![p.Guid].Start"></span>
+
+                    </td>
+                    <td>
+                        <input type="date" asp-for="ProjectDtos![p.Guid].Finished">
+                        <span class="text-danger" asp-validation-for="ProjectDtos![p.Guid].Finished"></span>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+</form>
+

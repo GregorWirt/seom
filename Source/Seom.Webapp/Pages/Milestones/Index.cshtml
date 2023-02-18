@@ -1,7 +1,16 @@
 ﻿@page "{ProjectGuid:Guid?}"
 @model Seom.Webapp.Pages.Milestones.IndexModel
+@section head {
+    <style>
+        .datatable input {
+            border: 1px solid hsl(165, 35%, 85%);
+            padding: 0.25rem;
+            width: 100%;
+        }
+    </style>
+}
 
-<h1>Tasks verwalten</h1>
+<h1>Meilensteine verwalten</h1>
 <div class="projectSelectForm">
     <div class="projectSelectFormLabel">Wähle ein Projekt:</div>
     <div class="projectSelectFormSelector">
@@ -10,64 +19,86 @@
         </select>
     </div>
 </div>
+
 @if (Model.ProjectGuid != default)
 {
-    @if (Model.Milestones.Any())
-    {
-        <p>
-            Hier kannst du die Meilensteine der Tasks bearbeiten.
-            Setze die Checkbox, wenn der Task beendet ist.
-            Es werden nur Meilensteine angezeigt, die noch nicht abgeschlossen sind.
-        </p>
-        <form id="tasksForm" method="post">
-            <div class="milestones">
+
+    <div class="validationErrors text-danger" asp-validation-summary="ModelOnly"></div>
+
+    <h5>Neuer Meilenstein</h5>
+    <form method="post" asp-page-handler="NewMilestone">
+        <table class="datatable">
+            <thead>
+                <tr>
+                    <th style="width: 40%">Name</th>
+                    <th style="width: 30%">Geplant</th>
+                    <th style="width: 30%">Fertiggestellt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input asp-for="NewMilestoneDto!.Name">
+                        <span class="text-danger" asp-validation-for="NewMilestoneDto!.Name"></span>
+                    </td>
+                    <td>
+                        <input type="date" asp-for="NewMilestoneDto!.DatePlanned">
+                        <span class="text-danger" asp-validation-for="NewMilestoneDto!.DatePlanned"></span>
+                    </td>
+                    <td>
+                        <input type="date" asp-for="NewMilestoneDto!.DateFinished">
+                        <span class="text-danger" asp-validation-for="NewMilestoneDto!.DateFinished"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-outline-primary">Save</button>
+    </form>
+
+    <h5 class="mt-3">Meilensteine editieren</h5>
+    <form method="post" asp-page-handler="EditMilestones">
+        <table class="datatable">
+            <thead>
+                <tr>
+                    <th style="width: 40%">Name</th>
+                    <th style="width: 30%">Geplant</th>
+                    <th style="width: 30%">Fertiggestellt</th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach (var m in Model.Milestones.Values.OrderBy(m => m.DatePlanned))
                 {
-                    <div class="milestoneCard">
-                        <div class="milestoneCardTitle">@m.Name (deadline: @m.DatePlanned.ToString("dd.MM.yyyy"))</div>
-                        <div class="milestoneCardContent">
-                            @if (m.Tasks.Any())
-                            {
-                                @foreach (var t in m.Tasks)
-                                {
-                                    <div class="milestoneCardContentTask">
-                                        <div class="milestoneCardContentTaskCheckbox">
-                                            <input asp-for="TaskFullfilled[t.Guid]" onchange="submitForm()">
-                                        </div>
-                                        <div class="milestoneCardContentTaskText">
-                                            <label asp-for="TaskFullfilled[t.Guid]">@t.Text</label>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <text>Keine Tasks definiert.</text>
-                            }
+                    <tr>
+                        <td>
+                            <input asp-for="MilestoneDtos![m.Guid].Guid" type="hidden">
+                            <input asp-for="MilestoneDtos![m.Guid].Name">
+                            <span class="text-danger" asp-validation-for="MilestoneDtos![m.Guid].Name"></span>
+                        </td>
+                        <td>
+                            <input type="date" asp-for="MilestoneDtos![m.Guid].DatePlanned">
+                            <span class="text-danger" asp-validation-for="MilestoneDtos![m.Guid].DatePlanned"></span>
 
-                        </div>
-                        <div class="milestoneCardFooter">
-                            <input class="form-control" placeholder="Neuen Task anlegen" asp-for="NewTasks[m.Guid]" />
-                            <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
-                        </div>
-                    </div>
+                        </td>
+                        <td>
+                            <input type="date" asp-for="MilestoneDtos![m.Guid].DateFinished">
+                            <span class="text-danger" asp-validation-for="MilestoneDtos![m.Guid].DateFinished"></span>
+                        </td>
+                    </tr>
                 }
-            </div>
-        </form>
-    }
-    else
-    {
-        <p>Keine offenen Meilensteine vorhanden.</p>
-    }
-
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-outline-primary">Save</button>
+    </form>
 }
+else
+{
+    <text>Wähle ein Projekt, um dessen Meilensteine zu editieren.</text>
+}
+
 
 <script>
     function submitProject() {
         const projectGuid = document.getElementById("projectSelector").value;
-        window.location.href = window.location.href.split("/")[0] + `/milestones/${projectGuid}`;
-    }
-    function submitForm() {
-        document.getElementById("tasksForm").submit();
+        window.location.href = window.location.href.split("/")[0] + `/Milestones/${projectGuid}`;
     }
 </script>

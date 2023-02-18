@@ -40,8 +40,8 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     align-items: stretch;
-    overflow-y: hidden;
 }
+
 
 header {
     display: flex;
@@ -86,7 +86,7 @@ main {
 .mainContent {
     flex-grow: 1;
     padding: 0rem 1rem;
-    overflow-y: auto;
+
 }
 
 @media (max-width:768px) {
