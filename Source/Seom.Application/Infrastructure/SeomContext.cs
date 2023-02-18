@@ -65,28 +65,28 @@ namespace Seom.Application.Infrastructure
         private void Seed()
         {
             Randomizer.Seed = new Random(1709);
+            var faker = new Faker("de");
             var baseDate = DateTime.UtcNow.Date;
 
-            var projects = new Faker<Project>("de").CustomInstantiator(f =>
-            {
-                var name = f.Commerce.Product();
-                var start = baseDate.AddDays(f.Random.Int(-2 * 365, -14));
-                DateTime? finished = start.AddDays(f.Random.Int(365, 2 * 365));
-                if (finished > baseDate) { finished = null; }
 
-                return new Project(
-                    name: name, start: start,
-                    repo: $"https://github.com/taurus_company/{name.ToLower()}".OrNull(f, 0.5f),
-                    customer: f.Company.CompanyName(),
-                    finished: finished)
-                { Guid = f.Random.Guid() };
-            })
-            .Generate(10)
-            .GroupBy(p => p.Name).Select(g => g.First())
-            .ToList();
+
+            var projects = new Project[]
+            {
+                new Project(name: "FluxApp", customer: "Apple", start: baseDate.AddDays(faker.Random.Int(-100, -14)), repo: "https://github.com/taurus/fluxapp")
+                    { Guid = faker.Random.Guid() },
+                new Project(name: "DataMapper", customer: "Amazon", start: baseDate.AddDays(faker.Random.Int(-100, -14)), repo: "https://github.com/taurus/DataMapper")
+                    { Guid = faker.Random.Guid() },
+                new Project(name: "CloudQA", customer: "Microsoft", start: baseDate.AddDays(faker.Random.Int(-100, -14)))
+                    { Guid = faker.Random.Guid() },
+                new Project(name: "InnoTrack", customer: "Google", start: baseDate.AddDays(faker.Random.Int(-100, -14)), repo: "https://github.com/taurus/InnoTrack")
+                    { Guid = faker.Random.Guid() },
+                new Project(name: "SwiftDrive", customer: "Walmart", start: baseDate.AddDays(faker.Random.Int(-100, -14)))
+                    { Guid = faker.Random.Guid() }
+            };
             Projects.AddRange(projects);
             SaveChanges();
 
+            var milestoneNames = new string[] { "Establish project goals and objectives", "Create project plan and timeline", "Develop software architecture", "Design user interface", "Write code and build software", "Conduct unit testing", "Perform system and integration testing", "Complete acceptance testing", "Develop user documentation", "Train users", "Deploy software", "Monitor system performance", "Troubleshoot software issues", "Update software", "Enhance existing features", "Develop new features", "Refactor code", "Maintain version control", "Create backup and recovery plan", "Evaluate and document lessons learned" };
             var milestones = new Faker<Milestone>("de").CustomInstantiator(f =>
             {
                 var project = f.Random.ListItem(projects);
@@ -95,11 +95,12 @@ namespace Seom.Application.Infrastructure
                 if (dateFinished > baseDate) { dateFinished = null; }
                 if (dateFinished > baseDate.AddDays(-14)) { dateFinished = f.Random.Bool(0.5f) ? null : dateFinished; }
                 return new Milestone(
-                    project: project, name: f.Lorem.Sentence(5),
+                    project: project, name: f.Random.ListItem(milestoneNames),
                     datePlanned: datePlanned, dateFinished: dateFinished)
                 { Guid = f.Random.Guid() };
             })
-            .Generate(100)
+            .Generate(25)
+            .GroupBy(m => m.Name).Select(g => g.First())
             .ToList();
             Milestones.AddRange(milestones);
             SaveChanges();

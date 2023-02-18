@@ -1,0 +1,42 @@
+.dashboardCards {
+    display: grid;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+}
+
+.dashbordCard {
+    border: 2px solid hsl(165, 35%, 35%);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashbordCardTitle {
+    background-color: hsl(165, 35%, 95%);
+    font-weight: bolder;
+    padding: 0.5rem 0.5rem;
+}
+
+
+.dashbordCardContent {
+    flex-grow: 1;
+    padding: 0rem 0.5rem;
+}
+
+.dashbordCardFooter {
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    column-gap: 0.5rem;
+}
+
+.projectSelectForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.projectSelectFormSelector {
+    flex: 0 1 20em;
+}

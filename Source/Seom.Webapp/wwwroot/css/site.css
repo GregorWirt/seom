@@ -61,8 +61,8 @@ main {
     display: flex;
     border: 3px solid hsl(165, 35%, 35%);
     align-items: stretch;
-    height: 100%;
     background-color: white;
+    flex-grow: 1;
 }
 
 .leftnav {

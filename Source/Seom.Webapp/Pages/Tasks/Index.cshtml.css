@@ -17,11 +17,10 @@
 }
 
 .milestoneCard {
-    border:2px solid black;
+    border: 2px solid hsl(165, 35%, 35%);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-
 }
 
 .milestoneCardTitle {

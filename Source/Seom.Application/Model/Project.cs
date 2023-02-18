@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Seom.Application.Model
 {
@@ -24,5 +25,6 @@ namespace Seom.Application.Model
         public DateTime Start { get; set; }
         public string? Repo { get; set; }
         public DateTime? Finished { get; set; }
+        public List<WorkItem> WorkItems { get; } = new();
     }
 }

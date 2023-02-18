@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Seom.Application.Model
 {
@@ -20,5 +21,14 @@ namespace Seom.Application.Model
         public string Name { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public double WorkingHoursInWeek(DateTime startOfWeek)
+        {
+            if (To < startOfWeek) { return 0; }
+            var startOfNextWeek = startOfWeek.AddDays(7);
+            if (From >= startOfNextWeek) { return 0; }
+            var to = To > startOfNextWeek ? startOfNextWeek : To;
+            return (to - From).TotalHours;
+        }
+        public static DateTime CalcStartOfWeek(DateTime dateTime) => dateTime.AddDays(-(((int)dateTime.DayOfWeek + 6) % 7)).Date;
     }
 }

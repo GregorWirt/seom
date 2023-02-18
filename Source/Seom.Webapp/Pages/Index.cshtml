@@ -1,13 +1,122 @@
 ﻿@page
 @model IndexModel
-
+@section head {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.3/highcharts.min.js" integrity="sha512-zOsTVG67dU2+q6O+yrK+tpDnyQg51TGunT/Ts0X9F+8GYYpRysyroB2fDXOLWLmSmNgdD31nBwrHKa+gjkmhYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+}
 <h1>Dashboard</h1>
+<div class="dashboardCards">
+    <div class="dashbordCard">
+        <div class="dashbordCardTitle">Aktuelle Projekte</div>
+        <div class="dashbordCardContent">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Projekt</th>
+                        <th>Start</th>
+                        <th>Arbeitsstd.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.CurrentProjects)
+                    {
+                        <tr>
+                            <td><a asp-page="/Projects/Index">@p.Name</a></td>
+                            <td>@p.Start.ToString("dd.MM.yyyy")</td>
+                            <td>@Math.Round(p.HoursTotal, 1)</td>
+                        </tr>
 
-<div class="dashbordCard">
-    <div class="dashbordCardTitle">Nächste Meilensteine</div>
-    <div class="dashbordCardContent"></div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="dashbordCard">
+        <div class="dashbordCardTitle">Offene Meilensteine (nächste 2 Wochen)</div>
+        <div class="dashbordCardContent">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Projekt</th>
+                        <th>Geplant</th>
+                        <th>Tasks offen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var m in Model.CurrentMilestones)
+                    {
+                        <tr>
+                            <td><a asp-page="/Tasks/Index" asp-route-projectguid="@m.ProjectGuid">@m.Name</a></td>
+                            <td><a asp-page="/Milestones/Index" asp-route-projectguid="@m.ProjectGuid">@m.ProjectName</a></td>
+                            <td>@m.DatePlanned.ToString("dd.MM.yyyy")</td>
+                            <td>@m.OpenTasks</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
-<div class="dashbordCard">
+
+<div class="mt-2 dashbordCard">
     <div class="dashbordCardTitle">Workload</div>
-    <div class="dashbordCardContent"></div>
+    <div class="dashbordCardContent">
+        <div class="projectSelectForm">
+            <div class="projectSelectFormLabel">Wähle ein Projekt:</div>
+            <div class="projectSelectFormSelector">
+                <select id="projectSelector" onchange="changeProject()" class="form-select" asp-items="@Model.Projects">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div id="chart"></div>
+    </div>
 </div>
+<script>
+    async function changeProject() {
+        const projectGuid = document.getElementById("projectSelector").value;
+        await drawDiagram(projectGuid)
+    }
+    async function drawDiagram(projectGuid) {
+        projectGuid = /^[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12}$/.test(projectGuid) ? projectGuid : "";
+        let data = [];
+        try {
+            const response = await fetch(`?handler=Workload&projectGuid=${projectGuid}`);
+            data = await response.json();
+        }
+        catch (e) {
+            alert("Fehler beim Laden der Diagrammdaten vom Server.");
+            return;
+        }
+        const highchartsConfig = {
+            title: null,
+            chart: {
+                renderTo: "chart",
+            },
+            title: {
+                text: `Workload`
+            },
+            legend: { enabled: false },
+            xAxis: {
+                type: 'datetime', tickInterval: 7 * 86_400 * 1000
+            },
+            yAxis: {
+                title: { text: "Stunden" }
+            },
+            series: [
+                {
+                    name: "Stunden",
+                    data: data,
+                    color: "#3A7869"
+                }
+            ]
+        };
+        Highcharts.chart(highchartsConfig);
+    }
+    window.addEventListener("load", async () => {
+        await drawDiagram();
+    });
+</script>
