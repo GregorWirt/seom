@@ -1,5 +1,9 @@
 # Diplomarbeit SEOM - Self Employed Order Management
 
+```
+git clone https://github.com/wir20005/seom
+```
+
 ![](screenshot.png)
 
 Projektpartner: Taurus Pioneering e.U.  
@@ -12,7 +16,7 @@ Sie kann von https://dotnet.microsoft.com/en-us/download geladen werden.
 
 ## Starten des Servers
 
-Start die Datei *startServer.cmd* (Windows) bzw. führe das Skript *startServer.sh* (macOS, Linux) aus.
+Starte die Datei *startServer.cmd* (Windows) bzw. führe das Skript *startServer.sh* (macOS, Linux) aus.
 
 ## Deployment in Microsoft Azure
 
