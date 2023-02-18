@@ -20,7 +20,7 @@ namespace Seom.Webapp.Pages.Calendar
 
         private readonly CalendarService _calendar;
         private readonly SeomContext _db;
-        private static readonly string[] _monthNames = new string[] { "", "Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" };
+        private static readonly string[] _monthNames = new string[] { "", "JÃ¤nner", "Februar", "MÃ¤rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" };
         public IndexModel(CalendarService calendar, SeomContext db)
         {
             _calendar = calendar;

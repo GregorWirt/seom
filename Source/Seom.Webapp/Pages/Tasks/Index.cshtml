@@ -48,7 +48,7 @@
                         </div>
                         <div class="milestoneCardFooter">
                             <input class="form-control" placeholder="Neuen Task anlegen" asp-for="NewTasks[m.Guid]" />
-                            <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+                            <button type="submit" asp-page-handler="NewTask" class="btn btn-outline-primary btn-sm">Save</button>
                         </div>
                     </div>
                 }

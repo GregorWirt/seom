@@ -19,9 +19,7 @@ namespace Seom.Webapp.Pages.Tasks
         public SelectList Projects { get; set; } = default!;
         [FromRoute]
         public Guid ProjectGuid { get; set; }
-        [BindProperty]
         public Dictionary<Guid, bool> TaskFullfilled { get; set; } = new();
-        [BindProperty]
         public Dictionary<Guid, string> NewTasks { get; set; } = new();
         public IndexModel(SeomContext db)
         {
@@ -34,16 +32,22 @@ namespace Seom.Webapp.Pages.Tasks
             NewTasks = Milestones.Keys.ToDictionary(m => m, m => string.Empty);
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(Dictionary<Guid, bool> taskFullfilled)
         {
             var tasks = Milestones.Values.SelectMany(m => m.Tasks).ToDictionary(t => t.Guid, t => t);
-            foreach (var fullfilled in TaskFullfilled)
+            foreach (var fullfilled in taskFullfilled)
             {
                 if (!tasks.TryGetValue(fullfilled.Key, out var task)) { continue; }
                 task.Fullfilled = fullfilled.Value;
             }
             _db.SaveChanges();
-            foreach (var newTask in NewTasks.Where(n => !string.IsNullOrEmpty(n.Value)))
+            return RedirectToPage();
+        }
+
+        public IActionResult OnPostNewTask(Dictionary<Guid, string> newTasks)
+        {
+            var tasks = Milestones.Values.SelectMany(m => m.Tasks).ToDictionary(t => t.Guid, t => t);
+            foreach (var newTask in newTasks.Where(n => !string.IsNullOrEmpty(n.Value)))
             {
                 if (!Milestones.TryGetValue(newTask.Key, out var milestone)) { continue; }
                 var task = new Task(milestone: milestone, text: newTask.Value);
@@ -52,15 +56,6 @@ namespace Seom.Webapp.Pages.Tasks
             _db.SaveChanges();
             return RedirectToPage();
         }
-        /// <summary>
-        /// Before model binding
-        /// </summary>
-        public override void OnPageHandlerSelected(PageHandlerSelectedContext context)
-        {
-
-        }
-
-
         /// <summary>
         /// After model binding
         /// </summary>
