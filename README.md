@@ -1,5 +1,7 @@
 # Diplomarbeit SEOM - Self Employed Order Management
 
+![](screenshot.png)
+
 Projektpartner: Taurus Pioneering e.U.  
 Betreuer: Klaus Unger
 
