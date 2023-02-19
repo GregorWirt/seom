@@ -29,7 +29,8 @@
         <div class="@classlist">
             <div class="dayHeader">
                 <div class="dayNumber">
-                    @($"{d.DateTime.Day}. {(d.DateTime.Month != Model.Month ? d.DateTime.Month.ToString("00") : string.Empty)}")
+                    <span class="weekdayInCell">@d.DateTime.ToString("ddd", System.Globalization.CultureInfo.GetCultureInfo("de-AT"))</span>
+                    @($"{d.DateTime.Day}.{(d.DateTime.Month != Model.Month ? d.DateTime.Month.ToString("00") : string.Empty)}")
                 </div>
                 <div class="holidayName">@d.PublicHolidayName</div>
             </div>

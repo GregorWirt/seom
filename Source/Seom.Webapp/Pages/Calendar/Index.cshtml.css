@@ -18,24 +18,14 @@
     flex: 8em 0 0;
 }
 
-
 .holidayName {
     overflow: hidden;
     white-space: nowrap;
     font-size: 80%;
 }
 
-.calendar {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, 0.5fr));
-    grid-template-rows: auto repeat(6, minmax(5em, auto));
-}
-
 .headerCell {
-    overflow: hidden;
-    font-weight: bolder;
-    border: 1px solid hsl(0, 0%, 85%);
+    display: none;
 }
 
 .dayCell {
@@ -88,3 +78,23 @@
     .milestones .delayed {
         color: red;
     }
+
+@media (min-width:992px) {
+    .calendar {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, 0.5fr));
+        grid-template-rows: auto repeat(6, minmax(5em, auto));
+    }
+
+    .headerCell {
+        display: block;
+        overflow: hidden;
+        font-weight: bolder;
+        border: 1px solid hsl(0, 0%, 85%);
+    }
+
+    .weekdayInCell {
+        display: none;
+    }
+}
